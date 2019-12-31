@@ -20,13 +20,11 @@ for(var i = 0; i < GRID_SIZE; i++){
 	}
 }
 
-
 app.use("/grid-game-1.1", express.static(__dirname + '/'));
 
 app.get('/grid-game-1.1', function(req, res){
   res.sendFile(__dirname + '/');
 });
-
 
 io.on('connection', function(socket){
 	
@@ -59,3 +57,9 @@ io.on('connection', function(socket){
 http.listen(port, function(){
   console.log('listening on *:' + port);
 });
+
+//Daily Saving
+//TODO figure out how to daily save
+// import schedule from 'node-schedule';
+// schedule.scheduleJob('0 0 * * *', () => { console.log("test"); }) ;
+

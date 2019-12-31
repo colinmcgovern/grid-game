@@ -8,6 +8,22 @@ function getMousePos(canvas, evt) {
     };
 }
 
+var save_button = document.getElementById('save');
+save_button.addEventListener("click", function() {
+
+    var today = new Date();
+    var yyyy = today.getFullYear();
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var dd = String(today.getDate()).padStart(2, '0');
+    var date_str = yyyy+'-'+mm+'-'+dd;
+
+    document.getElementById('myCanvasSmall').toBlob(function(blob) {
+        saveAs(blob, date_str+".png");
+    });
+
+    
+});
+
 var paint_color = 0; //black as default
 
 //Pixel Canvas 
@@ -18,7 +34,6 @@ var height = canvas.height;
 var c=document.getElementById("myCanvas");
 var ctx=c.getContext("2d");
 
-
 //Toolbar Canvas 
 var canvas2 = document.getElementById('toolbar');
 var width2 = canvas2.width;
@@ -27,6 +42,9 @@ var height2 = canvas2.height;
 var c2 = document.getElementById("toolbar");
 var ctx2 = c2.getContext("2d");
 
+//Small canvas for downloading
+var c3=document.getElementById("myCanvasSmall");
+var ctx3=c3.getContext("2d");
 
 //Getting Data From Server 
 
@@ -89,6 +107,17 @@ socket.on('grid', function (data) {
     
             }
         }
+
+        //Filling Squares 
+        for(var i = 0; i < GRID_SIZE; i++){
+            
+            for(var j = 0; j < GRID_SIZE; j++){    
+                ctx3.beginPath();
+                ctx3.fillStyle = COLORS[data[i][j]];
+                ctx3.fillRect(i,j,1,1);
+                ctx3.stroke(); 
+            }
+        }
             
         //Drawing Grid 
         for(var i = 0; i < GRID_SIZE; i++){
@@ -145,9 +174,6 @@ canvas2.addEventListener('click', function(evt) {
         }
     }
 } , false);
-
-        
-
 
 
 
