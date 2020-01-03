@@ -1,1 +1,3 @@
-# unfinished-3d-gmae
+Pixel Painter Game
+
+Easy project that I made to learn node
